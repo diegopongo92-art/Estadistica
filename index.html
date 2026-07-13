@@ -250,6 +250,7 @@
       <div class="pill"><span class="dot" id="statusDot"></span><span id="statusText">Conectando…</span></div>
       <div class="pill">Actualizado: <span class="mono" id="lastSync" style="margin-left:4px;">—</span></div>
       <button class="btn" id="refreshBtn">↻ Actualizar datos</button>
+      <label class="btn" style="cursor:pointer;">📁 Cargar CSV manual<input type="file" id="fileInput" accept=".csv" style="display:none;"></label>
     </div>
   </div>
   <div class="ticker">
@@ -273,7 +274,8 @@
       • La hoja de Google Sheets dejó de estar publicada (Archivo → Compartir → Publicar en la web).<br>
       • No hay conexión a internet en este momento.
     </div>
-    <button class="btn" style="display:inline-flex;" onclick="loadData()">↻ Reintentar</button>
+    <button class="btn" style="display:inline-flex;" onclick="loadData(true)">↻ Reintentar</button>
+    <label class="btn" style="display:inline-flex;cursor:pointer;margin-left:8px;">📁 Cargar CSV manual<input type="file" id="fileInputError" accept=".csv" style="display:none;"></label>
   </div>
 
   <div id="app" class="hidden">
@@ -515,19 +517,21 @@ function topN(map, n){
 }
 
 /* ---------------- Load ---------------- */
-async function fetchCsvText(){
-  const bust = CSV_URL + '&_ts=' + Date.now();
-  // Intento 1: conexión directa
+async function fetchCsvText(forceFresh){
+  // IMPORTANTE: no se le agregan parámetros extra a la URL de Google Sheets.
+  // Agregar cache-busting (?_ts=...) puede romper la redirección interna que
+  // hace Google hacia el servidor final del CSV y provocar errores de conexión.
+  const url = forceFresh ? (CSV_URL + (CSV_URL.includes('?') ? '&' : '?') + 'nocache=' + Date.now()) : CSV_URL;
   try{
-    const res = await fetch(bust, {cache:'no-store'});
+    const res = await fetch(url, {mode:'cors'});
     if(!res.ok) throw new Error('HTTP '+res.status);
     const text = await res.text();
     if(!text || text.trim().length < 10) throw new Error('Respuesta vacía');
     return text;
   }catch(e1){
-    // Intento 2: proxy CORS de respaldo (útil si el navegador bloquea el origen file:// o hay restricciones CORS)
+    // Respaldo: proxy CORS público (útil si el navegador bloquea el origen file://)
     try{
-      const proxied = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(bust);
+      const proxied = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(CSV_URL);
       const res2 = await fetch(proxied);
       if(!res2.ok) throw new Error('HTTP '+res2.status);
       const text2 = await res2.text();
@@ -535,26 +539,22 @@ async function fetchCsvText(){
       return text2;
     }catch(e2){
       const err = new Error(e1.message + ' · Respaldo también falló: ' + e2.message);
-      err.original = e1;
       throw err;
     }
   }
 }
 
-async function loadData(){
+async function loadData(forceFresh){
   document.getElementById('loadingState').classList.remove('hidden');
   document.getElementById('errorState').classList.add('hidden');
   document.getElementById('app').classList.add('hidden');
   document.getElementById('statusText').textContent = 'Conectando…';
   document.getElementById('statusDot').classList.add('off');
   try{
-    if(location.protocol === 'file:'){
-      console.warn('Advertencia: la página se abrió como archivo local (file://). Algunos navegadores bloquean fetch() a Google Sheets en este modo.');
-    }
-    const text = await fetchCsvText();
+    const text = await fetchCsvText(forceFresh);
     const parsed = Papa.parse(text, {header:true, skipEmptyLines:true, transformHeader: h=>h.trim()});
     RAW = parsed.data.map(normalizeRow).filter(r=>r.titular);
-    if(!RAW.length) throw new Error('El CSV se descargó pero no se encontraron filas válidas (revisa que la columna TITULAR exista).');
+    if(!RAW.length) throw new Error('El CSV se descargó pero no se encontraron filas válidas (revisa que la columna TITULAR exista y tenga datos).');
     document.getElementById('statusText').textContent = 'En vivo';
     document.getElementById('statusDot').classList.remove('off');
     document.getElementById('lastSync').textContent = new Date().toLocaleTimeString('es-PE');
@@ -569,6 +569,29 @@ async function loadData(){
     document.getElementById('errorDetail').textContent = 'Detalle técnico: ' + err.message;
     document.getElementById('statusText').textContent = 'Sin conexión';
   }
+}
+
+function loadFromManualFile(file){
+  document.getElementById('loadingState').classList.add('hidden');
+  document.getElementById('errorState').classList.add('hidden');
+  const reader = new FileReader();
+  reader.onload = (ev)=>{
+    try{
+      const parsed = Papa.parse(ev.target.result, {header:true, skipEmptyLines:true, transformHeader: h=>h.trim()});
+      RAW = parsed.data.map(normalizeRow).filter(r=>r.titular);
+      if(!RAW.length) throw new Error('El archivo no contiene filas válidas.');
+      document.getElementById('statusText').textContent = 'Archivo local';
+      document.getElementById('statusDot').classList.add('off');
+      document.getElementById('lastSync').textContent = new Date().toLocaleTimeString('es-PE');
+      initFilters();
+      applyFilters();
+      document.getElementById('app').classList.remove('hidden');
+    }catch(err){
+      document.getElementById('errorState').classList.remove('hidden');
+      document.getElementById('errorDetail').textContent = 'Detalle técnico: ' + err.message;
+    }
+  };
+  reader.readAsText(file);
 }
 
 function normalizeRow(row){
@@ -631,7 +654,6 @@ function initFilters(){
     }
     page=1; applyFilters();
   });
-  document.getElementById('refreshBtn').addEventListener('click', loadData);
   document.querySelectorAll('thead th[data-sort]').forEach(th=>{
     th.addEventListener('click', ()=>{
       const key = th.dataset.sort;
@@ -1104,6 +1126,17 @@ function renderTable(){
 }
 
 /* ---------------- Init ---------------- */
+document.getElementById('refreshBtn').addEventListener('click', ()=>loadData(true));
+document.getElementById('fileInput').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(file) loadFromManualFile(file);
+  e.target.value = '';
+});
+document.getElementById('fileInputError').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(file) loadFromManualFile(file);
+  e.target.value = '';
+});
 loadData();
 </script>
 </body>
