@@ -6,9 +6,11 @@
   <title>CIC · Centro de Inteligencia Comunicacional</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- ===== LIBRERÍAS (orden correcto) ===== -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+  
   <style>
     /* ============================================================
        PALETA: #002f80 (azul MML) + BLANCO
@@ -35,11 +37,7 @@
       --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Inter', -apple-system, system-ui, sans-serif;
@@ -53,7 +51,7 @@
     .header {
       background: var(--primary);
       color: var(--white);
-      padding: 20px 0;
+      padding: 16px 0;
       border-bottom: 3px solid rgba(255,255,255,0.12);
       position: sticky;
       top: 0;
@@ -67,16 +65,16 @@
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 12px;
     }
     .header-brand {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
     }
     .header-brand .seal {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       background: rgba(255,255,255,0.12);
       border: 2px solid rgba(255,255,255,0.25);
@@ -84,32 +82,31 @@
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 13px;
       letter-spacing: 0.5px;
       flex-shrink: 0;
     }
     .header-brand h1 {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 600;
       letter-spacing: -0.3px;
       line-height: 1.2;
     }
     .header-brand .sub {
-      font-size: 12px;
+      font-size: 11.5px;
       opacity: 0.75;
       font-weight: 400;
-      letter-spacing: 0.2px;
     }
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
     .header-actions .pill {
-      font-size: 12px;
+      font-size: 11.5px;
       background: rgba(255,255,255,0.10);
-      padding: 6px 14px;
+      padding: 5px 14px;
       border-radius: 99px;
       display: flex;
       align-items: center;
@@ -134,9 +131,9 @@
     }
     .btn {
       font-family: 'Inter', sans-serif;
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 500;
-      padding: 8px 18px;
+      padding: 6px 16px;
       border-radius: 8px;
       border: none;
       cursor: pointer;
@@ -163,13 +160,6 @@
       background: transparent;
     }
 
-    /* ===== WRAP ===== */
-    .wrap {
-      max-width: 1360px;
-      margin: 0 auto;
-      padding: 24px;
-    }
-
     /* ===== TICKER ===== */
     .ticker {
       background: var(--white);
@@ -181,25 +171,20 @@
     .ticker-track {
       display: inline-flex;
       gap: 48px;
-      padding: 10px 0;
+      padding: 8px 0;
       animation: scroll-ticker 50s linear infinite;
     }
-    .ticker:hover .ticker-track {
-      animation-play-state: paused;
-    }
+    .ticker:hover .ticker-track { animation-play-state: paused; }
     .ticker-item {
-      font-size: 12.5px;
+      font-size: 12px;
       color: var(--gray-600);
       display: inline-flex;
       gap: 10px;
       align-items: center;
     }
-    .ticker-item b {
-      color: var(--gray-800);
-      font-weight: 600;
-    }
+    .ticker-item b { color: var(--gray-800); font-weight: 600; }
     .tk-tag {
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 600;
       padding: 2px 10px;
       border-radius: 99px;
@@ -214,32 +199,39 @@
       100% { transform: translateX(-50%); }
     }
 
-    /* ===== FILTROS (minimalistas) ===== */
+    /* ===== WRAP ===== */
+    .wrap {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 20px 24px 60px;
+    }
+
+    /* ===== FILTROS ===== */
     .filters {
       background: var(--white);
       border-radius: var(--radius);
-      padding: 20px 24px;
-      margin-bottom: 28px;
+      padding: 18px 22px;
+      margin-bottom: 24px;
       box-shadow: var(--shadow);
       border: 1px solid var(--gray-200);
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 14px 20px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px 18px;
       align-items: end;
     }
     .filters label {
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.4px;
       color: var(--gray-500);
       display: block;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
     .filters select,
     .filters input {
       width: 100%;
-      padding: 8px 12px;
+      padding: 7px 12px;
       border: 1px solid var(--gray-200);
       border-radius: 8px;
       font-family: 'Inter', sans-serif;
@@ -258,12 +250,11 @@
       display: flex;
       gap: 8px;
       align-items: center;
-      grid-column: span 1;
     }
     .filters .btn-clear {
       background: var(--gray-100);
       color: var(--gray-600);
-      padding: 8px 16px;
+      padding: 7px 14px;
       border-radius: 8px;
       border: none;
       font-size: 12px;
@@ -271,9 +262,7 @@
       font-weight: 500;
       transition: var(--transition);
     }
-    .filters .btn-clear:hover {
-      background: var(--gray-200);
-    }
+    .filters .btn-clear:hover { background: var(--gray-200); }
     .filters .result-count {
       font-size: 12px;
       color: var(--gray-500);
@@ -284,14 +273,14 @@
     /* ===== KPI GRID ===== */
     .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 14px;
-      margin-bottom: 28px;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
     }
     .kpi {
       background: var(--white);
       border-radius: var(--radius);
-      padding: 16px 18px;
+      padding: 14px 16px;
       box-shadow: var(--shadow);
       border: 1px solid var(--gray-200);
       transition: var(--transition);
@@ -301,43 +290,81 @@
       transform: translateY(-2px);
     }
     .kpi .label {
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.4px;
       color: var(--gray-500);
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
     .kpi .value {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 600;
       color: var(--gray-900);
       letter-spacing: -0.5px;
     }
     .kpi .delta {
       font-size: 11px;
-      margin-top: 4px;
+      margin-top: 3px;
       font-weight: 500;
     }
     .kpi .delta.up { color: #15803d; }
     .kpi .delta.down { color: #dc2626; }
     .kpi .delta.neutral { color: var(--gray-400); }
 
+    /* ===== PREDICCIONES ===== */
+    .prediction-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .pred-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--gray-200);
+      text-align: center;
+    }
+    .pred-card .label {
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: var(--gray-500);
+    }
+    .pred-card .value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-top: 3px;
+    }
+    .pred-card .conf {
+      font-size: 11px;
+      color: var(--gray-500);
+      margin-top: 2px;
+    }
+    .pred-card .conf strong { color: var(--gray-700); }
+    .pred-card .trend { font-size: 12px; margin-top: 3px; }
+    .pred-card .trend.up { color: #15803d; }
+    .pred-card .trend.down { color: #dc2626; }
+    .pred-card .trend.neutral { color: var(--gray-500); }
+
     /* ===== INSIGHTS + ALERTS ===== */
     .twocol {
       display: grid;
       grid-template-columns: 1.4fr 1fr;
-      gap: 18px;
-      margin-bottom: 28px;
+      gap: 16px;
+      margin-bottom: 24px;
     }
-    @media (max-width: 900px) {
-      .twocol { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 900px) { .twocol { grid-template-columns: 1fr; } }
     .panel {
       background: var(--white);
       border-radius: var(--radius);
-      padding: 20px 24px;
+      padding: 18px 22px;
       box-shadow: var(--shadow);
       border: 1px solid var(--gray-200);
     }
@@ -348,14 +375,14 @@
       margin-bottom: 2px;
     }
     .panel .panel-sub {
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--gray-500);
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
     .insight {
       display: flex;
       gap: 12px;
-      padding: 10px 0;
+      padding: 9px 0;
       border-top: 1px solid var(--gray-100);
     }
     .insight:first-child { border-top: none; }
@@ -370,19 +397,16 @@
     }
     .insight p {
       margin: 0;
-      font-size: 13px;
+      font-size: 12.5px;
       line-height: 1.6;
       color: var(--gray-600);
     }
-    .insight b {
-      color: var(--gray-800);
-      font-weight: 600;
-    }
+    .insight b { color: var(--gray-800); font-weight: 600; }
 
     .alert {
-      padding: 12px 14px;
+      padding: 10px 14px;
       border-radius: 8px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       background: var(--gray-50);
       border-left: 4px solid var(--gray-300);
     }
@@ -394,10 +418,10 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
     .alert .a-title {
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 600;
       color: var(--gray-800);
     }
@@ -414,7 +438,7 @@
     .badge.baja { background: #bfdbfe; color: #1e3a8a; }
     .alert p {
       margin: 0;
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--gray-600);
       line-height: 1.5;
     }
@@ -423,36 +447,34 @@
     .chart-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
-      margin-bottom: 28px;
+      gap: 16px;
+      margin-bottom: 24px;
     }
-    @media (max-width: 900px) {
-      .chart-grid { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 900px) { .chart-grid { grid-template-columns: 1fr; } }
     .chart-card {
       background: var(--white);
       border-radius: var(--radius);
-      padding: 18px 20px 14px;
+      padding: 16px 18px 12px;
       box-shadow: var(--shadow);
       border: 1px solid var(--gray-200);
     }
     .chart-card.full { grid-column: 1 / -1; }
     .chart-card h3 {
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 600;
       color: var(--gray-800);
       margin-bottom: 2px;
     }
     .chart-card .cc-sub {
-      font-size: 11.5px;
+      font-size: 11px;
       color: var(--gray-500);
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
     .chart-box {
       position: relative;
-      height: 260px;
+      height: 240px;
     }
-    .chart-box.tall { height: 300px; }
+    .chart-box.tall { height: 280px; }
     .chart-box .no-data {
       position: absolute;
       inset: 0;
@@ -462,50 +484,6 @@
       color: var(--gray-400);
       font-size: 13px;
     }
-
-    /* ===== PREDICCIÓN ===== */
-    .prediction-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 14px;
-      margin-bottom: 28px;
-    }
-    .pred-card {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 16px 20px;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--gray-200);
-      text-align: center;
-    }
-    .pred-card .label {
-      font-size: 10.5px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-      color: var(--gray-500);
-    }
-    .pred-card .value {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 26px;
-      font-weight: 600;
-      color: var(--primary);
-      margin-top: 4px;
-    }
-    .pred-card .conf {
-      font-size: 11px;
-      color: var(--gray-500);
-      margin-top: 2px;
-    }
-    .pred-card .conf strong {
-      color: var(--gray-700);
-    }
-    .pred-card .trend {
-      font-size: 12px;
-      margin-top: 4px;
-    }
-    .pred-card .trend.up { color: #15803d; }
-    .pred-card .trend.down { color: #dc2626; }
 
     /* ===== TABLE ===== */
     .table-wrap {
@@ -518,16 +496,16 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 12.5px;
+      font-size: 12px;
     }
     thead th {
       text-align: left;
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.4px;
       color: var(--gray-500);
-      padding: 10px 14px;
+      padding: 9px 14px;
       border-bottom: 1px solid var(--gray-200);
       background: var(--gray-50);
       cursor: pointer;
@@ -535,7 +513,7 @@
     }
     thead th:hover { color: var(--primary); }
     tbody td {
-      padding: 10px 14px;
+      padding: 9px 14px;
       border-bottom: 1px solid var(--gray-100);
       color: var(--gray-600);
       vertical-align: middle;
@@ -548,7 +526,7 @@
     }
     tbody a:hover { text-decoration: underline; }
     .sent-badge {
-      font-size: 9.5px;
+      font-size: 9px;
       font-weight: 600;
       padding: 2px 10px;
       border-radius: 99px;
@@ -563,7 +541,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 16px;
+      padding: 10px 16px;
       font-size: 12px;
       color: var(--gray-500);
       border-top: 1px solid var(--gray-100);
@@ -577,7 +555,7 @@
       border: 1px solid var(--gray-200);
       color: var(--gray-600);
       border-radius: 6px;
-      padding: 5px 12px;
+      padding: 4px 12px;
       cursor: pointer;
       font-size: 12px;
       font-weight: 500;
@@ -595,22 +573,20 @@
 
     /* ===== LOADING / ERROR ===== */
     .loading, .error {
-      padding: 80px 20px;
+      padding: 60px 20px;
       text-align: center;
       color: var(--gray-500);
     }
     .loading .spin {
-      width: 32px;
-      height: 32px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
-      margin: 0 auto 16px;
+      margin: 0 auto 14px;
       border: 3px solid var(--gray-200);
       border-top-color: var(--primary);
       animation: spin 0.8s linear infinite;
     }
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
     .error .error-title {
       font-size: 16px;
       font-weight: 600;
@@ -639,11 +615,11 @@
 
     /* ===== FOOTER ===== */
     footer {
-      margin-top: 48px;
-      padding-top: 20px;
+      margin-top: 40px;
+      padding-top: 18px;
       border-top: 1px solid var(--gray-200);
       color: var(--gray-500);
-      font-size: 11.5px;
+      font-size: 11px;
       line-height: 1.7;
       text-align: center;
     }
@@ -653,17 +629,17 @@
     @media (max-width: 768px) {
       .header-brand h1 { font-size: 16px; }
       .header-actions .pill { font-size: 11px; padding: 4px 12px; }
-      .btn { font-size: 11px; padding: 6px 14px; }
+      .btn { font-size: 11px; padding: 5px 12px; }
       .kpi .value { font-size: 18px; }
-      .filters { grid-template-columns: 1fr 1fr; padding: 16px; }
+      .filters { grid-template-columns: 1fr 1fr; padding: 14px; }
       .filters .actions { grid-column: 1 / -1; justify-content: flex-start; }
-      .pred-card .value { font-size: 20px; }
+      .pred-card .value { font-size: 18px; }
     }
     @media (max-width: 480px) {
       .filters { grid-template-columns: 1fr; }
       .kpi-grid { grid-template-columns: 1fr 1fr; }
-      .wrap { padding: 16px; }
-      .header-inner { flex-direction: column; align-items: stretch; gap: 12px; }
+      .wrap { padding: 12px 16px 40px; }
+      .header-inner { flex-direction: column; align-items: stretch; gap: 10px; }
       .header-actions { justify-content: flex-start; flex-wrap: wrap; }
     }
   </style>
@@ -682,7 +658,7 @@
     </div>
     <div class="header-actions">
       <div class="pill"><span class="dot" id="statusDot"></span><span id="statusText">Conectando…</span></div>
-      <div class="pill">Actualizado: <span class="mono" id="lastSync">—</span></div>
+      <div class="pill">Actualizado: <span id="lastSync">—</span></div>
       <button class="btn btn-outline" id="refreshBtn">↻ Actualizar</button>
       <label class="btn btn-primary" style="cursor:pointer;">📁 CSV<input type="file" id="fileInput" accept=".csv" style="display:none;"></label>
     </div>
@@ -709,12 +685,12 @@
     <div class="error-detail" id="errorDetail"></div>
     <div class="error-help">
       <strong>Causas más comunes:</strong><br>
-      • Si abriste el archivo con doble clic (<span class="mono">file://…</span>), súbelo a GitHub Pages o usa un servidor local.<br>
+      • Si abriste el archivo con doble clic (<span style="font-family:monospace;">file://…</span>), súbelo a GitHub Pages o usa un servidor local.<br>
       • La hoja de Google Sheets debe estar publicada (Archivo → Compartir → Publicar en la web).<br>
       • También puedes usar el botón <strong>📁 CSV</strong> para cargar un archivo local.
     </div>
-    <button class="btn btn-primary" onclick="loadData(true)">↻ Reintentar</button>
-    <label class="btn" style="cursor:pointer;background:var(--gray-200);color:var(--gray-700);margin-left:8px;">📁 Cargar CSV<input type="file" id="fileInputError" accept=".csv" style="display:none;"></label>
+    <button class="btn" style="background:var(--primary);color:white;padding:8px 24px;" onclick="loadData(true)">↻ Reintentar</button>
+    <label class="btn" style="cursor:pointer;background:var(--gray-200);color:var(--gray-700);margin-left:8px;padding:8px 18px;">📁 Cargar CSV<input type="file" id="fileInputError" accept=".csv" style="display:none;"></label>
   </div>
 
   <!-- ===== APP ===== -->
@@ -847,7 +823,6 @@
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT2khLH7C3lCFCIV3ss1U5AV4SOL922Sld2rnPhSayp39VqgtlBV8ey63dxgCbur1nHiK-6CfNKB2B-/pub?gid=817460174&single=true&output=csv';
 
 const DOW_NAMES = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
-const NAVY_PALETTE = ['#002f80','#1a4d9e','#4d7fc7','#7aa3d9','#a8c4e8','#c5daf2','#e2edfa'];
 
 let RAW = [];
 let FILTERED = [];
@@ -984,7 +959,6 @@ function linearRegression(x, y) {
   return { slope, intercept, r2 };
 }
 
-// Suavizamiento exponencial simple
 function exponentialSmoothing(data, alpha = 0.3) {
   if (!data || data.length === 0) return [];
   const result = [data[0]];
@@ -994,7 +968,6 @@ function exponentialSmoothing(data, alpha = 0.3) {
   return result;
 }
 
-// Predicción por suavizamiento exponencial (proyecta n pasos)
 function exponentialForecast(data, alpha = 0.3, steps = 7) {
   if (!data || data.length === 0) return [];
   const smoothed = exponentialSmoothing(data, alpha);
@@ -1006,19 +979,15 @@ function exponentialForecast(data, alpha = 0.3, steps = 7) {
   return forecast;
 }
 
-// Regresión lineal múltiple simple (3 variables: dow, alcalde, tipoMedio)
 function multipleLinearRegression(data, targetKey, featureKeys) {
-  // Simplificado: usa correlaciones para estimar coeficientes
   const n = data.length;
   if (n < 5) return { coefficients: {}, r2: 0, predictions: [] };
 
-  // Extraer valores
   const target = data.map(r => r[targetKey] || 0);
   const features = featureKeys.map(key => data.map(r => {
     const val = r[key];
     if (typeof val === 'number') return val;
     if (typeof val === 'string') {
-      // Codificar categóricas: 1 si es 'SI' o 'Positivo', 0 en otro caso
       const upper = val.toUpperCase();
       if (upper === 'SI' || upper === 'POSITIVO') return 1;
       if (upper === 'NO' || upper === 'NEGATIVO') return 0;
@@ -1027,7 +996,6 @@ function multipleLinearRegression(data, targetKey, featureKeys) {
     return 0;
   }));
 
-  // Calcular coeficientes mediante regresión lineal simple para cada feature
   const coefficients = {};
   let r2Sum = 0;
   featureKeys.forEach((key, idx) => {
@@ -1333,8 +1301,6 @@ function renderPredictions() {
   }
 
   const withDate = d.filter(r => r.date).sort((a, b) => a.date - b.date);
-  const dailyCount = [];
-  const dailyLabels = [];
   const byDay = new Map();
   withDate.forEach(r => {
     const k = formatDateInput(r.date);
@@ -1343,26 +1309,25 @@ function renderPredictions() {
   });
   const sorted = [...byDay.entries()].sort((a, b) => a[0].localeCompare(b[0]));
   const counts = sorted.map(e => e[1]);
-  const labels = sorted.map(e => e[0]);
+  const lastActual = counts[counts.length - 1] || 0;
 
-  // 1. Predicción por suavizamiento exponencial (7 días)
+  // 1. Suavizamiento exponencial
   const alpha = 0.25;
   const forecast = exponentialForecast(counts, alpha, 7);
-  const lastActual = counts[counts.length - 1] || 0;
   const predictedAvg = mean(forecast);
   const confidence = Math.min(90, Math.round(60 + (counts.length / 100) * 20));
 
-  // 2. Regresión lineal múltiple (factores: día de semana, alcalde, tipo de medio)
+  // 2. Regresión lineal múltiple
   const mlr = multipleLinearRegression(d, 'soles', ['dow', 'alcalde', 'tipoMedio']);
   const avgSoles = d.reduce((a, r) => a + r.soles, 0) / d.length;
 
-  // 3. Probabilidad de cobertura positiva (basada en histórico)
+  // 3. Probabilidad de cobertura positiva
   const pos = d.filter(r => r.sentimiento === 'Positivo').length;
   const probPos = pct(pos, d.length) / 100;
 
-  // 4. Día con mayor probabilidad de éxito
-  const dowCounts = {};
+  // 4. Mejor día para difundir
   const dowSoles = {};
+  const dowCounts = {};
   d.forEach(r => {
     if (r.dow === null) return;
     const name = DOW_NAMES[r.dow];
@@ -1372,13 +1337,14 @@ function renderPredictions() {
   let bestDow = '—';
   let bestScore = -Infinity;
   Object.keys(dowCounts).forEach(name => {
+    if (dowCounts[name] < 2) return;
     const avg = dowSoles[name] / dowCounts[name];
     const score = avg * dowCounts[name];
     if (score > bestScore) { bestScore = score; bestDow = name; }
   });
 
-  // 5. Tendencia de predicción
-  const trend = forecast.length > 1 ? (forecast[forecast.length - 1] - forecast[0]) / forecast[0] : 0;
+  // 5. Tendencia
+  const trend = forecast.length > 1 ? (forecast[forecast.length - 1] - forecast[0]) / (forecast[0] || 1) : 0;
   const trendCls = trend > 0.05 ? 'up' : trend < -0.05 ? 'down' : 'neutral';
 
   grid.innerHTML = `
@@ -1391,7 +1357,7 @@ function renderPredictions() {
     <div class="pred-card">
       <div class="label">💰 Valor publicitario estimado</div>
       <div class="value">S/ ${Math.round(avgSoles * (1 + (predictedAvg / (lastActual || 1)))).toLocaleString('es-PE')}</div>
-      <div class="conf">Basado en promedio de S/ ${Math.round(avgSoles).toLocaleString('es-PE')} por nota</div>
+      <div class="conf">Basado en S/ ${Math.round(avgSoles).toLocaleString('es-PE')} por nota</div>
     </div>
     <div class="pred-card">
       <div class="label">🎯 Probabilidad de cobertura positiva</div>
@@ -1400,13 +1366,13 @@ function renderPredictions() {
     </div>
     <div class="pred-card">
       <div class="label">📅 Mejor día para difundir</div>
-      <div class="value" style="font-size:20px;">${bestDow}</div>
+      <div class="value" style="font-size:18px;">${bestDow}</div>
       <div class="conf">${bestDow !== '—' ? 'Mayor valorización promedio' : 'Sin datos suficientes'}</div>
     </div>
     <div class="pred-card">
       <div class="label">📊 R² del modelo predictivo</div>
       <div class="value">${mlr.r2 ? (mlr.r2 * 100).toFixed(1) + '%' : '—'}</div>
-      <div class="conf">${mlr.r2 > 0.3 ? '✅ Modelo con capacidad predictiva' : '⚠️ Datos insuficientes para modelo robusto'}</div>
+      <div class="conf">${mlr.r2 > 0.3 ? '✅ Modelo con capacidad predictiva' : '⚠️ Datos insuficientes'}</div>
     </div>
   `;
 }
@@ -1559,7 +1525,6 @@ function renderAlerts() {
     const last7 = withDate.filter(r => r.date > d7 && r.date <= maxDate);
     const prev7 = withDate.filter(r => r.date > d14 && r.date <= d7);
 
-    // Incremento de negativas
     const negLast = last7.filter(r => r.sentimiento === 'Negativo').length;
     const negPrev = prev7.filter(r => r.sentimiento === 'Negativo').length;
     const negLastPct = pct(negLast, last7.length);
@@ -1572,7 +1537,6 @@ function renderAlerts() {
       });
     }
 
-    // Caída de cobertura
     if (prev7.length > 3) {
       const dropPct = Math.round(((last7.length - prev7.length) / prev7.length) * 100);
       if (dropPct <= -30) {
@@ -1582,7 +1546,6 @@ function renderAlerts() {
       }
     }
 
-    // Urgencia alta
     const urgentes = last7.filter(r => r.urgencia === 'ALTA');
     if (urgentes.length) {
       alerts.push({
@@ -1593,7 +1556,6 @@ function renderAlerts() {
     }
   }
 
-  // Medio crítico
   const medGroups = new Map();
   d.forEach(r => {
     if (!medGroups.has(r.medio)) medGroups.set(r.medio, []);
@@ -1613,7 +1575,6 @@ function renderAlerts() {
     });
   }
 
-  // Eje con baja presencia
   const temaC = countBy(d, r => r.tema);
   const temaEntries = [...temaC.entries()].sort((a, b) => a[1] - b[1]);
   if (temaEntries.length > 4 && temaEntries[0][1] < Math.round(total / temaEntries.length) * 0.4) {
@@ -1641,10 +1602,13 @@ function renderAlerts() {
 }
 
 // ============================================================
-//  GRÁFICOS
+//  GRÁFICOS (con manejo seguro de Chart.js)
 // ============================================================
 function destroyChart(id) {
-  if (CHARTS[id]) { CHARTS[id].destroy(); delete CHARTS[id]; }
+  if (CHARTS[id]) { 
+    try { CHARTS[id].destroy(); } catch(e) {}
+    delete CHARTS[id]; 
+  }
 }
 
 function baseGrid() {
@@ -1667,12 +1631,18 @@ function restoreCanvas(id) {
 function renderCharts() {
   const d = FILTERED;
   if (!d.length) {
-    Object.values(CHARTS).forEach(c => c.destroy());
+    Object.values(CHARTS).forEach(c => { try { c.destroy(); } catch(e) {} });
     CHARTS = {};
     document.querySelectorAll('.chart-box canvas').forEach(canvas => {
       const parent = canvas.parentElement;
       if (parent) parent.innerHTML = `<div class="no-data">Sin datos para mostrar</div>`;
     });
+    return;
+  }
+
+  // Asegurar que Chart.js está definido
+  if (typeof Chart === 'undefined') {
+    console.error('Chart.js no está cargado.');
     return;
   }
 
@@ -1704,10 +1674,7 @@ function renderEvolucion(d) {
   });
   const keys = [...byDay.keys()].sort();
   const values = keys.map(k => byDay.get(k).total);
-  const posValues = keys.map(k => byDay.get(k).pos);
-  const negValues = keys.map(k => byDay.get(k).neg);
 
-  // Promedio móvil 7 días
   const ma7 = [];
   for (let i = 0; i < values.length; i++) {
     const start = Math.max(0, i - 6);
@@ -1715,108 +1682,123 @@ function renderEvolucion(d) {
     ma7.push(mean(slice));
   }
 
-  // Predicción exponencial (7 días)
   const alpha = 0.25;
   const forecast = exponentialForecast(values, alpha, 7);
   const forecastLabels = [];
   const lastDate = new Date(keys[keys.length - 1]);
   for (let i = 1; i <= 7; i++) {
-    const d = new Date(lastDate);
-    d.setDate(d.getDate() + i);
-    forecastLabels.push(d.getDate() + '/' + String(d.getMonth() + 1).padStart(2, '0'));
+    const dt = new Date(lastDate);
+    dt.setDate(dt.getDate() + i);
+    forecastLabels.push(dt.getDate() + '/' + String(dt.getMonth() + 1).padStart(2, '0'));
   }
 
   destroyChart('chEvolucion');
-  const ctx = document.getElementById('chEvolucion').getContext('2d');
-  CHARTS.chEvolucion = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: [...keys.map(k => k.split('-').slice(1,3).reverse().join('/')), ...forecastLabels],
-      datasets: [
-        { label: 'Cobertura diaria', data: [...values, ...Array(7).fill(null)], borderColor: '#002f80', backgroundColor: 'rgba(0,47,128,0.06)', fill: true, tension: 0.3, pointRadius: 1, borderWidth: 2 },
-        { label: 'Media móvil 7 días', data: [...ma7, ...Array(7).fill(null)], borderColor: '#1a4d9e', borderDash: [4, 4], borderWidth: 2, pointRadius: 0, fill: false },
-        { label: 'Predicción (7 días)', data: [...Array(values.length).fill(null), ...forecast], borderColor: '#dc2626', borderWidth: 2, borderDash: [6, 4], pointRadius: 3, fill: false }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      interaction: { mode: 'index', intersect: false },
-      plugins: {
-        legend: { labels: { color: '#475569', font: { family: 'Inter', size: 10.5 }, boxWidth: 12 } },
-        tooltip: { titleFont: { family: 'Inter' }, bodyFont: { family: 'Inter' } }
+  try {
+    const ctx = document.getElementById('chEvolucion').getContext('2d');
+    CHARTS.chEvolucion = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [...keys.map(k => k.split('-').slice(1,3).reverse().join('/')), ...forecastLabels],
+        datasets: [
+          { label: 'Cobertura diaria', data: [...values, ...Array(7).fill(null)], borderColor: '#002f80', backgroundColor: 'rgba(0,47,128,0.06)', fill: true, tension: 0.3, pointRadius: 1, borderWidth: 2 },
+          { label: 'Media móvil 7 días', data: [...ma7, ...Array(7).fill(null)], borderColor: '#1a4d9e', borderDash: [4, 4], borderWidth: 2, pointRadius: 0, fill: false },
+          { label: 'Predicción (7 días)', data: [...Array(values.length).fill(null), ...forecast], borderColor: '#dc2626', borderWidth: 2, borderDash: [6, 4], pointRadius: 3, fill: false }
+        ]
       },
-      scales: {
-        x: { grid: baseGrid(), ticks: { ...baseTicks(), maxTicksLimit: 20 } },
-        y: { grid: baseGrid(), ticks: baseTicks(), beginAtZero: true }
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { labels: { color: '#475569', font: { family: 'Inter', size: 10.5 }, boxWidth: 12 } },
+          tooltip: { titleFont: { family: 'Inter' }, bodyFont: { family: 'Inter' } }
+        },
+        scales: {
+          x: { grid: baseGrid(), ticks: { ...baseTicks(), maxTicksLimit: 20 } },
+          y: { grid: baseGrid(), ticks: baseTicks(), beginAtZero: true }
+        }
       }
-    }
-  });
+    });
+  } catch(e) {
+    console.error('Error en renderEvolucion:', e);
+  }
 }
 
 function renderBarRanking(id, map, n, color) {
   const entries = topN(map, n);
   destroyChart(id);
-  const ctx = document.getElementById(id).getContext('2d');
-  CHARTS[id] = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: entries.map(e => e[0].length > 24 ? e[0].slice(0, 22) + '…' : e[0]),
-      datasets: [{ data: entries.map(e => e[1]), backgroundColor: color || '#002f80', borderRadius: 4, barThickness: 16 }]
-    },
-    options: {
-      indexAxis: 'y',
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { display: false }, tooltip: { titleFont: { family: 'Inter' }, bodyFont: { family: 'Inter' } } },
-      scales: {
-        x: { grid: baseGrid(), ticks: baseTicks(), beginAtZero: true },
-        y: { grid: { display: false }, ticks: { color: '#475569', font: { family: 'Inter', size: 10.5 } } }
+  try {
+    const ctx = document.getElementById(id).getContext('2d');
+    CHARTS[id] = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: entries.map(e => e[0].length > 24 ? e[0].slice(0, 22) + '…' : e[0]),
+        datasets: [{ data: entries.map(e => e[1]), backgroundColor: color || '#002f80', borderRadius: 4, barThickness: 16 }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: { titleFont: { family: 'Inter' }, bodyFont: { family: 'Inter' } } },
+        scales: {
+          x: { grid: baseGrid(), ticks: baseTicks(), beginAtZero: true },
+          y: { grid: { display: false }, ticks: { color: '#475569', font: { family: 'Inter', size: 10.5 } } }
+        }
       }
-    }
-  });
+    });
+  } catch(e) {
+    console.error('Error en renderBarRanking:', id, e);
+  }
 }
 
 function renderDoughnut(id, map, colorMap) {
   const entries = topN(map, 8);
   const colors = entries.map((e, i) => (colorMap && colorMap[e[0]]) || ['#002f80','#1a4d9e','#4d7fc7','#7aa3d9','#a8c4e8'][i % 5]);
   destroyChart(id);
-  const ctx = document.getElementById(id).getContext('2d');
-  CHARTS[id] = new Chart(ctx, {
-    type: 'doughnut',
-    data: { labels: entries.map(e => e[0]), datasets: [{ data: entries.map(e => e[1]), backgroundColor: colors, borderColor: '#ffffff', borderWidth: 2 }] },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      cutout: '60%',
-      plugins: {
-        legend: { position: 'bottom', labels: { color: '#475569', boxWidth: 10, font: { family: 'Inter', size: 10 } } }
+  try {
+    const ctx = document.getElementById(id).getContext('2d');
+    CHARTS[id] = new Chart(ctx, {
+      type: 'doughnut',
+      data: { labels: entries.map(e => e[0]), datasets: [{ data: entries.map(e => e[1]), backgroundColor: colors, borderColor: '#ffffff', borderWidth: 2 }] },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '60%',
+        plugins: {
+          legend: { position: 'bottom', labels: { color: '#475569', boxWidth: 10, font: { family: 'Inter', size: 10 } } }
+        }
       }
-    }
-  });
+    });
+  } catch(e) {
+    console.error('Error en renderDoughnut:', id, e);
+  }
 }
 
 function renderDow(d) {
   const dowC = countBy(d.filter(r => r.dow !== null), r => r.dow);
   const order = [1, 2, 3, 4, 5, 6, 0];
   destroyChart('chDow');
-  const ctx = document.getElementById('chDow').getContext('2d');
-  CHARTS.chDow = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: order.map(i => DOW_NAMES[i].slice(0, 3)),
-      datasets: [{ data: order.map(i => dowC.get(i) || 0), backgroundColor: '#002f80', borderRadius: 4, barThickness: 28 }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { grid: { display: false }, ticks: baseTicks() },
-        y: { grid: baseGrid(), ticks: baseTicks(), beginAtZero: true }
+  try {
+    const ctx = document.getElementById('chDow').getContext('2d');
+    CHARTS.chDow = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: order.map(i => DOW_NAMES[i].slice(0, 3)),
+        datasets: [{ data: order.map(i => dowC.get(i) || 0), backgroundColor: '#002f80', borderRadius: 4, barThickness: 28 }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { display: false }, ticks: baseTicks() },
+          y: { grid: baseGrid(), ticks: baseTicks(), beginAtZero: true }
+        }
       }
-    }
-  });
+    });
+  } catch(e) {
+    console.error('Error en renderDow:', e);
+  }
 }
 
 function renderAlcaldeImpact(d) {
@@ -1825,26 +1807,30 @@ function renderAlcaldeImpact(d) {
   const avgCon = conAlc.length ? conAlc.reduce((a, r) => a + r.soles, 0) / conAlc.length : 0;
   const avgSin = sinAlc.length ? sinAlc.reduce((a, r) => a + r.soles, 0) / sinAlc.length : 0;
   destroyChart('chAlcalde');
-  const ctx = document.getElementById('chAlcalde').getContext('2d');
-  CHARTS.chAlcalde = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Con declaraciones del alcalde', 'Sin declaraciones'],
-      datasets: [{ data: [Math.round(avgCon), Math.round(avgSin)], backgroundColor: ['#002f80', '#94a3b8'], borderRadius: 4, barThickness: 40 }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: (c) => 'S/ ' + c.raw.toLocaleString('es-PE') } }
+  try {
+    const ctx = document.getElementById('chAlcalde').getContext('2d');
+    CHARTS.chAlcalde = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Con declaraciones del alcalde', 'Sin declaraciones'],
+        datasets: [{ data: [Math.round(avgCon), Math.round(avgSin)], backgroundColor: ['#002f80', '#94a3b8'], borderRadius: 4, barThickness: 40 }]
       },
-      scales: {
-        x: { grid: { display: false }, ticks: { color: '#475569', font: { family: 'Inter', size: 10 } } },
-        y: { grid: baseGrid(), ticks: baseTicks(), beginAtZero: true }
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: (c) => 'S/ ' + c.raw.toLocaleString('es-PE') } }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: '#475569', font: { family: 'Inter', size: 10 } } },
+          y: { grid: baseGrid(), ticks: baseTicks(), beginAtZero: true }
+        }
       }
-    }
-  });
+    });
+  } catch(e) {
+    console.error('Error en renderAlcaldeImpact:', e);
+  }
 }
 
 // ============================================================
